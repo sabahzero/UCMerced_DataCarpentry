@@ -1,0 +1,64 @@
+---
+title: "DC_Mar26 Instructor Workshop"
+author: "Sabah Ul-Hasan"
+date: "3/26/2018"
+output: html_document
+---
+Interested in becoming a Software or Data Carpentry Instructor, but unsure if you're qualified? Here's a breakdown of the range of experiences from participants Instructor Workshop Mar 26-27, 2018 at the UC Davis DIB (http://dsi.ucdavis.edu/) demonstrating people of all levels and backgrounds can all start as excellent instructors! 
+
+Step 1: Creating a data frame in R
+```{r}
+# Create lists for each question and associated answer
+Q1_WorkshopParticipation = c( "Taken a Workshop", "Workshop Helper", "Organized a Workshop", "No BUT Familiar", "No NOT Familiar" )
+A1_WorkshopParticipation = c(7,9,0,11,2)
+
+Q2_TeachingLevel = c("UG or Grad Assistant Experience", "No Experience", "Taught Seminar or Workshop", "Instructor of Record", "Primary Education Experience", "Outreach or Demo Experience")
+A2_TeachingLevel = c(15,0,14,11,3,7)
+
+# Join the lists into a vector of equal lengths
+Q1_df = data.frame(Q1_WorkshopParticipation, A1_WorkshopParticipation)
+Q2_df = data.frame(Q2_TeachingLevel, A2_TeachingLevel)
+```
+
+Step 2: Visualizing the results of each dataset
+```{r}
+# Install appropriate packages
+install.packages(ggplot2)
+library(ggplot2)
+packageDescription("ggplot2") # v2.2.1
+ 
+# Simple barplot of Question 1, "Have you ever participated in a Software Carpentry or Data Carpentry Workshop?"
+Q1 <-
+  ggplot(data = Q1_df, aes(x=Q1_WorkshopParticipation, y=A1_WorkshopParticipation)) + # plot
+  xlab("Level of Previous Participation") + ylab("Number of Participants") + # labeling axes
+  geom_bar(stat="identity", color="steel blue", fill="gold") + # aesthetic
+  ggtitle("Question 1: Participation in a SW or Data Carpentry Workshop") + # maine title
+  geom_text(aes(label=A1_WorkshopParticipation), vjust=2, color="steel blue", size=5) # see number
+
+Q1 # view plot
+
+# Simple barplot of Question 2, "Which of these most accurately describes your teaching experience?"
+Q2 <-
+  ggplot(data = Q2_df, aes(x=Q2_TeachingLevel, y=A2_TeachingLevel)) + # plot
+  theme(axis.text.x = element_text(angle = 30, hjust = 1)) + # rotate x axis labels
+  xlab("Level of Previous Teaching Experience") + ylab("Number of Participants") + # labeling axes
+  geom_bar(stat="identity", color="gold", fill="steel blue") + # aesthetic
+  ggtitle("Question 2: Description of Teaching Experience") + # maine title
+  geom_text(aes(label=A2_TeachingLevel), vjust=1.5, color="gold", size=5) # see number
+
+Q2 # view plot
+```
+
+Step 3: Creating and saving a figure from the results
+```{r}
+# Install appropriate packages
+install.packages(gridExtra)
+library(gridExtra)
+packageDescription("gridExtra") # v2.3
+
+png("Figure1.png") # save as a png
+grid.arrange(Q1, Q2) # view plots on same page
+dev.off() # save to your working directory
+```
+
+Woohoo, you did it!
