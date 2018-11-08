@@ -6,6 +6,7 @@ output:
   html_document: default
 ---
 
+#### Notes ####
 Nov 1-2, 2018 UC Merced Workshop Schedule (by Nora C Mitchell, PhD)
 https://noracmitchell.github.io/2018-11-01-ucmerced/
 
@@ -88,15 +89,17 @@ git log --oneline         shows commits using one line
 git reset HEAD <filename> unstages the file
 git status                status of the repository
 git checkout              restore past state
+#### Notes ####
 
 
-Programming with R Lesson
-0. Setup: Complete
+Programming with R Lesson (https://tinyurl.com/ycvyop3r)
+0. Setup: Complete 
 
 1. Analyzing Patient Data
 ```{r setup, include=FALSE}
+
 # Set working directory
-setwd("~/Desktop/r-novice-inflammation/")
+setwd("~/Desktop/r-novice-inflammation/") # adjust accordingly
 # Load data
 read.csv(file = "data/inflammation-01.csv", header = FALSE)
 
@@ -196,6 +199,7 @@ plot(avg_day_inflammation) # visualizes mean inflamm.
 
 2. Creating Functions
 ```{r setup, include=FALSE}
+
 # Defining a Function
 fahrenheit_to_kelvin <- function(temp_F) {
   temp_K <- ((temp_F - 32) * (5 / 9)) + 273.15
@@ -230,15 +234,11 @@ center <- function(data, desired = 0) {
   return(new_data)
 }
 
-test_data <- c(0, 0, 0, 0)
-center(test_data, 3)
-
-names = (Sabah, Katie)
-
 ```
 
 3. Analyzing Multiple Data Sets
 ```{r setup, include=FALSE}
+
 analyze <- function(filename) {
   # Plots the average, min, and max inflammation over time.
   # Input is character string of a csv file.
@@ -255,7 +255,7 @@ png("test.png")
 analyze("data/inflammation-01.csv")
 dev.off()
 
-# how to save all three plots at once
+# how to save all three plots at once? (see next section)
 
 # loops
 best_practice <- c("Let", "the", "computer", "do", "the", "work") # making a list that spells a sentence
@@ -342,7 +342,7 @@ analyze_all <- function(pattern) {
 }
 
 # Save the figures as PDFs
-pdf("inflammation-01.pdf") # this saves all of them 
+pdf("inflammation-01.pdf") # this saves all of them** 
 analyze("data/inflammation-01.csv")
 dev.off()
 
@@ -490,11 +490,4 @@ res
 
 sapply(filenames, FUN = analyze)
 
-```
-
-
-
-```{r setup, include=FALSE}
-library(gglpot2)
-library(knitr)
 ```
