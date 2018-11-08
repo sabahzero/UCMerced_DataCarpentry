@@ -1,0 +1,500 @@
+---
+title: "DataCarpentryWorkshop_File1"
+author: "Sabah Ul-Hasan"
+date: "11/1/2018"
+output:
+  html_document: default
+---
+
+Nov 1-2, 2018 UC Merced Workshop Schedule (by Nora C Mitchell, PhD)
+https://noracmitchell.github.io/2018-11-01-ucmerced/
+
+Etherpad
+https://pad.carpentries.org/_2018-11-01-ucmerced
+
+Unix  http://man7.org/linux/man-pages/man1/ls.1.html 
+      https://www.shell-tools.net/index.php?op=regexp
+      https://regex101.com/r/yE3tO8/1
+  Best practices: avoid spaces and underscores in file folder names
+  Text editors handle text. nano is a text editor. 
+    In nano, the ^ symbol means to press Control key.
+  Microsoft Word is not a text editor, it's a word processor.
+  Reuse a previously entered command by pressing the "up arrow"
+  Pressing tab helps fill in the rest of your file name in a command
+  Once space is the same as multiple spaces
+  No space vs one space results in different outcomes 
+  pwd   = present working directory
+  cd    = change directory
+  cd .. = moves you up in directory
+  cd -  = takes you back to your previous working directory
+  ls    = shows what's in your directory
+  mkdir = makes a new directory
+  rm    = removes a file in your directory (cannot recover)
+  rm -r = remove folder
+  mv    = moves a file, changes its name (overwrites file)
+  cp    = copies a file
+  cp -r = copies a directory
+  wc    = gives you the line, word, and character count of a file
+  wc -c = character count
+  wc -l = line count
+  wc -w = word count
+  To make a new file, type:           > myfile.txt   
+  To open that file with nano, type:  nano myfile.txt 
+  Close the file by pressing:         CTRL + X
+  cat draft.txt will show you the text in draft.txt
+  nano /draft.txt will open a new draft in nano named draft.txt 
+  echo hello > testfile01.txt will write hello into testfile01.txt 
+  echo hello >> testfile02.txt will append hello into testfile02.txt
+  head -3 animals.txt will return the top three lines of animals.txt
+  tail -2 animals.txt will return the bottom two lines of animals.txt
+
+
+R     https://tinyurl.com/ycvyop3r 
+      http://swcarpentry.github.io/r-novice-gapminder/
+Data management       http://openrefine.org/
+  project management  https://tinyurl.com/y77tbloo 
+  jupyter             https://tinyurl.com/ybx6mbjm
+  tidyverse           https://www.tidyverse.org/
+                      http://hackmd.io/ 
+  r-bloggers          https://tinyurl.com/ybfb9rqo 
+Data vizualization    https://www.r-graph-gallery.com/
+  ggplot2             https://tinyurl.com/ya4lxpfg 
+  colorbrewer         https://tinyurl.com/ycklsjkf 
+Code troubleshotting  https://stackoverflow.com/ 
+                      https://www.r-bloggers.com/
+                      
+  Reading or writing format .csv, .txt
+  Seeing code for function  print(function_name)
+                            print(summary)
+  Packages    Type function_name without brackets for function's code
+              http://masterr.org/r/how-to-view-source-code-in-r/
+    versions  https://tinyurl.com/ya25e85b       
+  methods() View different methods
+  Using R for large datasets and cluster vs RStudio for quick viz
+  Lists   One-dimensional arrays of data containing multiple data types
+  Vectors One-dimensional arrays of data with single data type
+  Dataframe usually has rows that are lists and columns are vectors
+    Rows are usually samples of a sort
+    Columns are usually the observations
+
+
+Git   https://noracmitchell.github.io/git-novice.html 
+git init                  initiates a new repository
+git add <filename>        stages that file / those files
+git commit -m "message"   commits the staged files to the repository
+git diff                  looks at diffs versions 
+git log                   shows the commits
+git log --oneline         shows commits using one line
+git reset HEAD <filename> unstages the file
+git status                status of the repository
+git checkout              restore past state
+
+
+Programming with R Lesson
+0. Setup: Complete
+
+1. Analyzing Patient Data
+```{r setup, include=FALSE}
+# Set working directory
+setwd("~/Desktop/r-novice-inflammation/")
+# Load data
+read.csv(file = "data/inflammation-01.csv", header = FALSE)
+
+
+#####  Variables  #####
+# Assiging a value to a string
+# Defining a variable: stores a value
+weight_kg <- 55
+weight_kg # Assigned 55 kg
+
+# Convert kg to pounds (1 kg = 2.2 lbs)
+2.2 * weight_kg
+2.2 * 55 # Confirms that we correctly assigned our string to 55 kg
+weight_lb <- 2.2 * weight_kg
+
+rm(weight_lb) # This does the same function as manually removing with the broom in environment
+
+weight_lb <- 2.2 * weight_kg
+
+weight_kg <- 100.0
+# weight in kg now...
+weight_kg
+
+weight_lb # these lbs are from an earlier, different value (55 kg)
+#####  Variables  #####
+
+
+# Printing with Parentheses
+dat <- read.csv(file = "data/inflammation-01.csv", header = FALSE)
+head(dat) # function head() lets us see first 6 lines of data frame
+
+# Assigning Values to Variables
+mass <- 47.5
+age <- 122
+mass <- mass * 2.0 # converts original mass to 95
+age <- age - 20 # converts original age to 102
+
+# Manipulating Data
+class(dat) # what's the classifcation?
+class(x)
+apples <- "oranges"
+class(apples)
+
+dim(dat) # whats the dimension
+dat[1 , 1] # tells us what's in the first row of the first column [ row , column]
+dat[30, 20]
+
+subdata <- dat[c(1, 3, 5), c(10, 20)] # subsets data
+
+1:5 # list of 1 through 5
+3:12 # list of numbers 3 to 12
+dat[1:4, 1:10] # gives output of rows 1-4 x columns 1-10
+dat[5:10, 1:10] # gives output for rows 5-10 x col 1-10
+dat[5, ] # every value for all columns with row 5
+dat[, 16:18] # all values for columns 16-18
+
+# Addressing Columns by Name
+patient_1 <- dat[1, ] # subset to look at patient 1
+max(patient_1) # max() finds maximum value [inflammation]
+
+max(dat[2, ]) # subset for patient 2 and find max
+
+min(dat[, 7]) # column 7 what was smallest inflammation
+# v values are corresponding to days (40 days)
+mean(dat[, 7]) # on day 7 the mean was 3.8 inflammation
+median(dat[, 7]) # on day 7 the median was 4
+sd(dat[, 7]) # on day 7 standard dev was 1.73
+
+# Forcing Conversion
+summary(dat[, 1:4]) # summary of data for days 1-4
+?summary() # question mark in front tells us what it is
+
+?apply() # what does apply do?
+avg_patient_inflammation <- apply(dat, 1, mean)
+# identifies the mean in each patient and creates list
+class(avg_patient_inflammation)
+avg_day_inflammation <- apply(dat, 2, mean)
+# rowMeans or colMeans to do similar things as apply()
+
+# Subset data example
+animal <- c("m", "o", "n", "k", "e", "y")
+mon = animal[1:3] # gives us output for 1-3 
+key = animal[4:6] # gives us outpout for 4-6 of animal list
+
+# Plotting example
+plot(avg_day_inflammation) # visualizes mean inflamm.
+
+# Summary
+# Uploading data
+# Manipulating data
+#   Variables
+#   Dataframes (datasets)
+#   Numeric vs character
+#   Functions and statistics
+#   Plotting
+```
+
+2. Creating Functions
+```{r setup, include=FALSE}
+# Defining a Function
+fahrenheit_to_kelvin <- function(temp_F) {
+  temp_K <- ((temp_F - 32) * (5 / 9)) + 273.15
+  return(temp_K)
+}
+
+# freezing point of water 32F
+fahrenheit_to_kelvin(32) # 273.15 Kelvin
+
+# boiling point of water
+fahrenheit_to_kelvin(212) # 373.15
+
+# create other functions such as C <= K, F <= C
+kelvin_to_celsius <- function(temp_K) {
+  temp_C <- temp_K - 273.15
+  return(temp_C)
+}
+
+kelvin_to_celsius(fahrenheit_to_kelvin(32.0))
+# freezing point of water is 32F which is 0C
+
+dat <- read.csv("data/inflammation-01.csv", FALSE)
+
+dat <- read.csv(header = FALSE, file = "data/inflammation-01.csv")
+dat <- read.csv(FALSE, "data/inflammation-01.csv")
+
+center <- function(data, desired = 0) {
+  # return a new vector containing the original data centered around the
+  # desired value (0 by default).
+  # Example: center(c(1, 2, 3), 0) => c(-1, 0, 1)
+  new_data <- (data - mean(data)) + desired
+  return(new_data)
+}
+
+test_data <- c(0, 0, 0, 0)
+center(test_data, 3)
+
+names = (Sabah, Katie)
+
+```
+
+3. Analyzing Multiple Data Sets
+```{r setup, include=FALSE}
+analyze <- function(filename) {
+  # Plots the average, min, and max inflammation over time.
+  # Input is character string of a csv file.
+  dat <- read.csv(file = filename, header = FALSE)
+  avg_day_inflammation <- apply(dat, 2, mean)
+  plot(avg_day_inflammation)
+  max_day_inflammation <- apply(dat, 2, max)
+  plot(max_day_inflammation)
+  min_day_inflammation <- apply(dat, 2, min)
+  plot(min_day_inflammation)
+}
+
+png("test.png")
+analyze("data/inflammation-01.csv")
+dev.off()
+
+# how to save all three plots at once
+
+# loops
+best_practice <- c("Let", "the", "computer", "do", "the", "work") # making a list that spells a sentence
+
+print_words <- function(sentence) {
+  print(sentence[1])
+  print(sentence[2])
+  print(sentence[3])
+  print(sentence[4])
+  print(sentence[5])
+  print(sentence[6])
+} # can adjust function to cut out or add words
+
+print_words(best_practice) 
+
+best_practice[-6] # automatically removes 6th word from vector
+
+print_words(best_practice[-6])
+
+# Let's make a looped function (for loop)
+print_words <- function(sentence) {
+  for (word in sentence) { # variable is word, collection is sentence
+    print(word)
+  }
+}
+
+print_words(best_practice)
+print_words(best_practice[-6])
+
+# basic structure of our for loop
+# for (variable in collection) {
+#   do things with variable
+# }
+
+# Read multiple files in one line
+list.files(path = "data", pattern = "csv")
+list.files(path = "data", pattern = "inflammation")
+
+# plots for all files
+filenames <- list.files(path = "data",  
+  # Now follows a regular expression that matches:
+  pattern = "inflammation-[0-9]{2}.csv",
+ #  the standard file extension of comma-separated values
+ #  the variable parts (two digits, each between 0 and 9)
+#  the static part of the filenames
+                        full.names = TRUE)
+filenames <- filenames[1:3]
+for (f in filenames) {
+  print(f)
+  analyze(f)
+}
+
+# Summary 
+# Analyzing of multiple datasets
+# Practiced using functions that we created
+# For loop we realized we could make function more efficient
+# For loop has many uses: make data upload more efficient, and other things
+```
+
+4. Making Choices
+```{r setup, include=FALSE}
+
+# Re-create analyze function
+analyze <- function(filename) {
+  # Plots the average, min, and max inflammation over time.
+  # Input is character string of a csv file.
+  dat <- read.csv(file = filename, header = FALSE)
+  avg_day_inflammation <- apply(dat, 2, mean)
+  plot(avg_day_inflammation)
+  max_day_inflammation <- apply(dat, 2, max)
+  plot(max_day_inflammation)
+  min_day_inflammation <- apply(dat, 2, min)
+  plot(min_day_inflammation)
+}
+
+# Create a nested function of analyze
+analyze_all <- function(pattern) {
+  # Runs the function analyze for each file in the current working directory
+  # that contains the given pattern.
+  filenames <- list.files(path = "data", pattern = pattern, full.names = TRUE)
+  for (f in filenames) {
+    analyze(f)
+    }
+}
+
+# Save the figures as PDFs
+pdf("inflammation-01.pdf") # this saves all of them 
+analyze("data/inflammation-01.csv")
+dev.off()
+
+png("inflammation-01.png") # this only saves the most recent of 3 figures
+analyze("data/inflammation-01.csv")
+dev.off() 
+
+# Conditionals and using if else statements
+# Create an if else statement
+num <- 37
+if (num > 100) {
+  print("greater")
+} else {
+  print("not greater")
+}
+
+# Setting up an if statement (without else)
+num <- 53
+if (num > 100) {
+  print("num is greater than 100")
+}
+
+# If else to return multiple scenarios (more than 2 scenarios)
+sign <- function(num) {
+  if (num > 0) {
+    return(1)
+  } else if (num == 0) {
+    return(0)
+  } else {
+    return(-1)
+  }
+}
+
+sign(-3)
+sign(0)
+sign(3)
+
+# Plots Based on Data
+dat <- read.csv("data/inflammation-01.csv", header = FALSE)
+# Write a function
+plot_dist <- function(x, threshold) {
+  if (length(x) > threshold) {
+    boxplot(x)
+  } else {
+    stripchart(x)
+  }
+}
+
+plot_dist(dat[, 10], threshold = 10)
+plot_dist(dat[1:5, 10], threshold = 10) 
+
+
+# Automatically create figures within analyze function
+analyze <- function(filename, output = NULL) {
+  # Plots the average, min, and max inflammation over time.
+  # Input:
+  #    filename: character string of a csv file
+  #    output: character string of pdf file for saving
+  if (!is.null(output)) {
+    pdf(output)
+  }
+  dat <- read.csv(file = filename, header = FALSE)
+  avg_day_inflammation <- apply(dat, 2, mean)
+  plot(avg_day_inflammation)
+  max_day_inflammation <- apply(dat, 2, max)
+  plot(max_day_inflammation)
+  min_day_inflammation <- apply(dat, 2, min)
+  plot(min_day_inflammation)
+  if (!is.null(output)) {
+    dev.off()
+  }
+}
+
+output <- NULL
+is.null(output)
+
+
+analyze("data/inflammation-01.csv")
+```
+
+5-7. On own time with helpers
+
+8. Making Packages in R
+```{r setup, include=FALSE}
+install.packages("knitr")
+library("knitr")
+packageVersion("knitr") # v1.20
+
+# Reasons to not automatically update a script
+# Sometimes better because they may have majorly changed script
+# You can define the version you want to install 
+```
+
+Subset of our data
+```{r setup, include=FALSE}
+subsetexample = dat[1:5, 10:15] # subset from when we read our data earlier
+# read.csv()
+write.csv(subsetexample, file = 'subsetexample_cleaned.csv') 
+summary(subsetexample) # we can convert to a table output
+# If you have a blank cell fill it with NA so that you can execute functions
+
+# Understanding Factors
+sex <- factor(c("male", "female", "female", "male"))
+levels(sex)
+nlevels(sex)
+
+# data.frame (character vs numeric)
+# vectors and lists
+# elements
+# variables (ways of classifying data.frame)
+# functions (loops, conditionals)
+# factors (ways of classifying data.frame)
+
+# What's the difference between a list and a vector? 
+list_example = dat[,10]
+str(list) # list you have characters 
+# vectors you can only have numbers, must be same data type
+# data frame can be mixed
+
+analyze <- function(filename) {
+  # Plots the average, min, and max inflammation over time.
+  # Input is character string of a csv file.
+  dat <- read.csv(file = filename, header = FALSE)
+  avg_day_inflammation <- apply(dat, 2, mean)
+  plot(avg_day_inflammation)
+  max_day_inflammation <- apply(dat, 2, max)
+  plot(max_day_inflammation)
+  min_day_inflammation <- apply(dat, 2, min)
+  plot(min_day_inflammation)
+}
+
+filenames <- list.files(path = "data", pattern = "inflammation-[0-9]{2}.csv", full.names = TRUE)
+
+a <- 1:10
+b <- 1:10
+
+res <- numeric(length = length(a))
+
+for 
+(i in seq_along(a)) {
+  res[i] <- a[i] + b[i]
+}
+
+res
+
+sapply(filenames, FUN = analyze)
+
+```
+
+
+
+```{r setup, include=FALSE}
+library(gglpot2)
+library(knitr)
+```
